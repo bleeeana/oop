@@ -8,21 +8,21 @@ using  namespace sf;
 class player
 {
 private:
-	
 	float speedx,speedy;
-	int hp = 100;
-	float stamina = 100;
+	float hp;
+	float stamina;
 	Sprite s;
 	float currframe;
 	bool run = 0;
+	int counter;
 public:
 	player(player& pl);
-	player(Texture& t);
+	player(Texture& t, int x, int y, int hp, float stamina);
 	void set_speed(float x, float y);
-	void update(float time);
+	void update(float time, int x);
 	Sprite& get_s();
 	void set_run(bool r);
-	int get_hp();
+	float get_hp();
 	float get_st();
 	bool get_r();
 	void charging();
@@ -31,5 +31,8 @@ public:
 	int gety();
 	float get_sx();
 	float get_sy();
+	int get_count();
+	void set_count();
+	void set_hp(float hp);
 };
 

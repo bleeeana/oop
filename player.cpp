@@ -6,18 +6,23 @@ player::player(player& pl)
 	this->hp = pl.get_hp();
 	this->s = pl.get_s();
 	this->stamina = pl.get_st();
+	this->counter = 0;
+
 }
 
-player::player(Texture& t)
+player::player(Texture& t, int x, int y, int hp, float stamina)
 {
-	t.loadFromFile("pic.png");
 	s.setTexture(t);
-	s.setPosition(480,750 );
+	s.setPosition(x, y);
 	s.setTextureRect(IntRect(164, 40, 58, 97));
 	s.setOrigin(30, 90);
-	speedx=speedy=0;
+	speedx = speedy = 0;
 	currframe = 0;
+	this->hp = hp;
+	this->stamina = stamina;
+	this->counter = 0;
 }
+
 
 void player::set_speed(float x, float y)
 {
@@ -27,15 +32,20 @@ void player::set_speed(float x, float y)
 
 
 
-void player::update(float time) {
-	s.setPosition((int(s.getPosition().x)+960) % 960,(int(s.getPosition().y)+960) % 960);
+void player::update(float time, int x) {
+	
+	s.setPosition((int(s.getPosition().x)+x*48) % (x * 48),(int(s.getPosition().y)+ x * 48) % (x * 48));
 	s.move(speedx * time, speedy * time);
 	currframe += 0.00001 * time;
 	if (currframe > 5) currframe -= 5;
-	if (speedx < 0) { s.setTextureRect(IntRect(160 + 121 * int(currframe), 164, 69, 91)); running(); }
-	if (speedx > 0) { s.setTextureRect(IntRect(164 + 120 * int(currframe), 404, 54, 91)); running(); }
-	if (speedy > 0) { s.setTextureRect(IntRect(155 + 120 * int(currframe), 282, 67, 95)); running(); }
-	if (speedy < 0) { s.setTextureRect(IntRect(164 + 120 * int(currframe), 40, 58, 97)); running(); }
+	if (speedx < 0) { s.setTextureRect(IntRect(160 + 121 * int(currframe), 164, 69, 91)); running(); 
+	}
+	if (speedx > 0) { s.setTextureRect(IntRect(164 + 120 * int(currframe), 404, 54, 91)); running(); 
+	}
+	if (speedy > 0) { s.setTextureRect(IntRect(155 + 120 * int(currframe), 282, 67, 95)); running(); 
+	}
+	if (speedy < 0) { s.setTextureRect(IntRect(164 + 120 * int(currframe), 40, 58, 97)); running();
+	}
 	charging();
 	speedx = 0;
 	speedy = 0;
@@ -52,7 +62,7 @@ void player::set_run(bool r)
 	this->run = r;
 }
 
-int player::get_hp()
+float player::get_hp()
 {
 	return this->hp;
 }
@@ -103,6 +113,21 @@ float player::get_sx()
 float player::get_sy()
 {
 	return speedy;
+}
+
+int player::get_count()
+{
+	return counter;
+}
+
+void player::set_count()
+{
+	this -> counter++;
+}
+
+void player::set_hp(float hp)
+{
+	this->hp += hp;
 }
 
 

@@ -3,61 +3,108 @@
 
 
 
-tile::tile(int x, int y): x(x), y(y)
+tile::tile( sf::Texture& t1, sf::Texture& t2, sf::Texture& t3, int x, int y, int type)
 {
-    
-    this->is_passable = 1;
-    this->is_inside = 0;
-    this->rect.setSize(sf::Vector2f(48,48));
-    this->rect.setFillColor(Color::White);
-    this->rect.setOutlineThickness(4);
-    this->rect.setOutlineColor(Color::Black);
-    this->rect.setPosition(this->x, this->y);
-    this->rect.setOrigin(24, 24);
+    this->t1 = t1;
+    this->t2 = t2;
+    this->t3 = t3;
+    this->set_type(type);
+    s.setOrigin(24, 24);
+    s.setPosition(x, y);
 }
 
-void tile::set_type(bool passable)
+tile::tile(tile& t, int x, int y)
 {
-    is_passable = passable;
+    this->t1 = t.t1;
+    this->t2 = t.t2;
+    this->t3 = t.t3;
+    this->set_type(t.get_type());
+    s.setOrigin(24, 24);
+    this->s.setPosition(x, y);  
+}
+
+void tile::set_type(int n)
+{
+    switch (n) {
+    case 0:
+       t = type::cell;
+       s.setTexture(t2);  
+       s.setTextureRect(IntRect(480, 335, 48, 48)); 
+       break;
+    case 1:
+        t = type::wall;
+        s.setTexture(t2);
+        s.setTextureRect(IntRect(434, 434, 48, 48)); 
+        break;
+    case 2:
+        t = type::heal;
+        s.setTexture(t3);
+        s.setTextureRect(IntRect(434, 720, 48, 48)); 
+        break;
+    case 3:
+        t = type::hole;
+        s.setTexture(t3);
+        s.setTextureRect(IntRect(243, 548, 48, 48)); 
+        break;
+    case 4:
+        t = type::treasure;
+        s.setTexture(t3);
+        s.setTextureRect(IntRect(528, 335, 48, 48)); 
+        break;
+    case 5:
+        t = type::cellinside;
+        this->s.setTexture(t1);
+        this->s.setTextureRect(IntRect(480, 335, 48, 48));
+        break;
+    default:
+        t = type::wall;
+        s.setTexture(t2);
+        s.setTextureRect(IntRect(434, 434, 48, 48));
+        break;
+    }
 }
 
 
 
-RectangleShape& tile::get_sprite()
+Sprite& tile::get_sprite()
 {
-    return this->rect;
+    return this->s;
 }
 
 int tile::getx()
 {
-    return this->x;
+    return this->s.getPosition().x;
 }
 
-int& tile::gety()
+int tile::gety()
 {
-    return this->y;
+    return this->s.getPosition().y;
 
 }
 
 
-void tile::react()
+
+int tile::get_type()
 {
-    if (!is_passable) this->rect.setFillColor(Color::Yellow);
-    else {
-        if (is_inside) {
-            this->rect.setFillColor(Color::Red);
-        }
-        else this->rect.setFillColor(Color::White);
+    if (this->t == type::cell) {
+        return 0;
+    }
+    else if (this->t == type::wall) {
+        return 1;
+    }
+    else if (this->t == type::heal) {
+        return 2;
+    }
+    else if (this->t == type::hole) {
+        return 3;
+    }
+    else if (this->t == type::treasure) {
+        return 4;
+    }
+    else if (this->t == type::cellinside) {
+        return 5;
     }
 }
 
-void tile::set_inside(bool in)
-{
-    is_inside = in;
-}
 
-bool tile::get_type()
-{
-    return this->is_passable;
-}
 
