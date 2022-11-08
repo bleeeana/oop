@@ -1,38 +1,28 @@
 #pragma once
-#include "pch.h"
-#include <SFML/Graphics.hpp>
-#include <iostream>
-
-using  namespace sf;
-
-class player
+#include "SFML/Graphics.hpp"
+#include "iobservable.h"
+class player : public iobservable
 {
 private:
-	float speedx,speedy;
+	long double speedx, speedy;
 	float hp;
 	float stamina;
-	Sprite s;
-	float currframe;
 	bool run = 0;
 	int counter;
+	logoutinfo* info;
 public:
-	player(player& pl);
-	player(Texture& t, int x, int y, int hp, float stamina);
-	void set_speed(float x, float y);
-	void update(float time, int x);
-	Sprite& get_s();
+	player(logoutinfo* info = nullptr);
+	void set_speed(long double x, long double y);
+	void set_hp(float hp);
 	void set_run(bool r);
-	float get_hp();
-	float get_st();
-	bool get_r();
+	bool get_run();
 	void charging();
 	void running();
-	int getx();
-	int gety();
-	float get_sx();
-	float get_sy();
-	int get_count();
-	void set_count();
-	void set_hp(float hp);
+	int get_hp();
+	int get_stamina();
+	int get_counter();
+	long double get_speedx();
+	long double get_speedy();
+	void set_counter(); // пусть оно еще и на экран выводится
 };
 
