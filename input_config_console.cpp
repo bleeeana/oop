@@ -1,32 +1,36 @@
 #include "pch.h"
 #include "input_config_console.h"
 
-void input_config_console::input()
+
+
+input_config_console::input_config_console(configuration* cfg)
 {
-	config.clear();
-	for (int i = 0; i < 5; i++) {
-		std::string s;
+	this->cfg = cfg;
+}
+
+void input_config_console::set()
+{
+	std::string s, b;
+	while (s != "end") {
 		getline(std::cin, s);
-		std::string b;
 		getline(std::cin, b);
 		if (s == "UP") {
-			config.insert({ UP,key::get_instance()->get_keys()->at(b) });
+			this->cfg->input(configuration::setting::UP, b);
 		}
 		else if (s == "DOWN") {
-			config.insert({ DOWN, key::get_instance()->get_keys()->at(b) });
+			this->cfg->input(configuration::setting::DOWN, b);
 		}
 		else if (s == "LEFT") {
-			config.insert({ LEFT, key::get_instance()->get_keys()->at(b) });
+			this->cfg->input(configuration::setting::LEFT, b);
 		}
 		else if (s == "RIGHT") {
-			config.insert({ RIGHT, key::get_instance()->get_keys()->at(b) });
+			this->cfg->input(configuration::setting::RIGHT, b);
 		}
 		else if (s == "RUN") {
-			config.insert({ RUN, key::get_instance()->get_keys()->at(b) });
+			this->cfg->input(configuration::setting::RUN, b);
 		}
-		else {
-			std::cout << "WTF man";
-			i--;
+		else if (s == "QUIT") {
+			this->cfg->input(configuration::setting::QUIT, b);
 		}
 	}
 }

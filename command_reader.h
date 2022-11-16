@@ -2,8 +2,9 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include "iobservable.h"
-#include "gui_management.h"
-//#include "console_management.h"
+#include "input_config.h"
+#include "input_config_console.h"
+
 using namespace sf;
 class command_reader : public iobservable
 {
@@ -13,13 +14,17 @@ private:
 	sf::Event event;
 	std::vector <OUTPUT> outputs;
 	std::vector <LEVEL> levels;
-	sfml_configuration* cfg;
-	management* mng;
+	configuration* config = nullptr;
 public:
-	void set_settings();
+	~command_reader()
+	{
+		delete config;
+	}
+	int set_difficult();
+	void set_settings(configuration* cfg);
 	void input_size_win();
 	int input_event();
-	//void set_management();
+	void set_management();
 	sf::Event& get_event();
 	int get_w();
 	int get_h();

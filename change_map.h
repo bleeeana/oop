@@ -6,5 +6,9 @@ class change_Map final: public event_Map
 public:
 	change_Map(Map* m, player* p);
 	void execute(logoutinfo* info) final;
+	~change_Map() final
+	{
+		std::cout<<"deleted changing";
+	}
 };
 

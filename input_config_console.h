@@ -1,8 +1,11 @@
 #pragma once
-#include "sfml_configuration.h"
-class input_config_console final: public sfml_configuration // iobservable
+#include "input.h"
+class input_config_console : public input
 {
+private:
+	configuration* cfg;
 public:
-	void input() final;
+	input_config_console(configuration* cfg);
+	void set() override;
 };
 

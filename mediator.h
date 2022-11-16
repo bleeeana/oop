@@ -8,12 +8,6 @@ private:
 	controller* control;
 public:
 	mediator(controller& control, command_reader& com);
-	~mediator()
-	{
-		reader = nullptr;
-		control = nullptr;
-		delete reader, control;
-	}
 	void start();
 };
 

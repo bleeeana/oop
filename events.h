@@ -4,5 +4,6 @@ class events : public iobservable
 {
 public:
 	virtual void execute(logoutinfo* info) = 0;
+	virtual ~events() {};
 };
 

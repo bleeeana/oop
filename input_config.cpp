@@ -1,31 +1,39 @@
 #include "pch.h"
 #include "input_config.h"
 
-void input_config::input()
+input_config::input_config(configuration* cfg)
 {
-	ifstream file("file.txt");
+    this->cfg = cfg;
+}
+
+void input_config::set()
+{
+    ifstream file("file.txt");
     if (file.is_open()) {
-        this->config.clear();
         while (!file.eof()) {
             string s;
             getline(file, s);
             string s1;
             getline(file, s1);
             if (s == "UP") {
-                this->config.insert({ UP, key::get_instance()->get_keys()->at(s1) });
+                this->cfg->input( configuration::setting::UP,s1);
             }
             else if (s == "DOWN") {
-                this->config.insert({ DOWN,key::get_instance()->get_keys()->at(s1) });
+                this->cfg->input(configuration::setting::DOWN, s1);
             }
             else if (s == "LEFT") {
-                this->config.insert({ LEFT, key::get_instance()->get_keys()->at(s1) });
+                this->cfg->input(configuration::setting::LEFT, s1);
             }
             else if (s == "RIGHT") {
-                this->config.insert({ RIGHT, key::get_instance()->get_keys()->at(s1) });
+                this->cfg->input(configuration::setting::RIGHT, s1);
             }
             else if (s == "RUN") {
-                this->config.insert({ RUN, key::get_instance()->get_keys()->at(s1) });
+                this->cfg->input(configuration::setting::RUN, s1);
+            }
+            else if (s == "QUIT") {
+                this->cfg->input(configuration::setting::QUIT, s1);
             }
         }
     }
+    this->cfg->check();
 }

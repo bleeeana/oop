@@ -1,9 +1,12 @@
 #pragma once
-#include "sfml_configuration.h"
+#include "input.h"
 using namespace std;
-class input_config final : public sfml_configuration
+class input_config : public input
 {
+private:
+	configuration* cfg;
 public:
-	void input() override;
+	input_config(configuration* cfg);
+	void set() override;
 };
 

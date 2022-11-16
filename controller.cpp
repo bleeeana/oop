@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "controller.h"
-//#include "input_config.h"
+
 
 void controller::movement(int k)
 {
@@ -24,6 +24,7 @@ void controller::movement(int k)
 	}
 	else this->pl->set_speed(0, 0);
 	react();
+	
 }
 
 
@@ -54,9 +55,11 @@ void controller::draw(sf::RenderWindow& win, sf::Texture &t, float time)
 	this->p->update(time, this->field->get_numx());
 	this->field_view->drawMap(win,t);
 	this->p->draw(win);
+	enemy->update(time, this->field->get_numx());
+	enemy->draw(win);
 }
 
-controller::controller(player* p, player_view& pv, Map* m, Map_view& mv, logoutinfo* info) : pl(p), p(&pv), field(m), field_view(&mv)
+controller::controller(player* p, player_view& pv, Map* m, Map_view& mv, enemies* enemies, logoutinfo* info) : pl(p), p(&pv), field(m), field_view(&mv), enemy(enemies)
 {
 	this->info = info;
 	this->field->add_observer(new iobserver);
@@ -87,14 +90,44 @@ void controller::colission(int i, int j, int k)
 	}
 }
 
+void controller::set_enemies(int k, Texture & t)
+{
+	switch (k)
+	{
+	case(1):
+		this->enemy->push_back_new(new enemy1_view(new enemy1(this->info), t, 0, this->field->get_numx() * 24));
+		break;
+	case(2):
+		this->enemy->push_back_new(new enemy1_view(new enemy1(this->info), t, 0, this->field->get_numx() * 24));
+		this->enemy->push_back_new(new enemy2_view(new enemy2(this->info), t, 0, 0));
+		break;
+	case(3):
+		this->enemy->push_back_new(new enemy1_view(new enemy1(this->info), t, 0, this->field->get_numx() *24));
+		this->enemy->push_back_new(new enemy2_view(new enemy2(this->info), t, 0, 0));
+		this->enemy->push_back_new(new enemy3_view(new enemy3(this->info), t, 0, this->field->get_numx()*36));
+		break;
+	default:
+		this->enemy->push_back_new(new enemy1_view(new enemy1(this->info), t, 0, this->field->get_numx() * 24));
+		break;
+	}
+}
+
+
+void controller::enemy_action()
+{
+	this->enemy->movement(this->field->get_numx(), this->p);
+	this->enemy->attack(this->p);
+}
+
 void controller::set_Map()
 {
 	message w(STATUS, "Game started", info);
 	notify(w);
 	fieldfactory fact(field, pl);
 	fact.creat_Map();
-	create_chest c(field, pl);
-	c.execute(info);
+	create_chest *c = new create_chest(field, pl);
+	c->execute(info);
+	delete c;
 }
 
 void controller::change()
@@ -128,3 +161,4 @@ bool controller::lose() {
 	}
 	else return 0;
 }
+

@@ -17,7 +17,6 @@ cell::cell(cell* other)
 cell cell::operator=(cell& c)
 {
     this->t = c.t;
-    this->delete_event();
     this->event = c.event;
     return *this;
 }
@@ -81,8 +80,9 @@ void cell::get_event(logoutinfo* info)
 
 void cell::delete_event()
 {
-    this->event = nullptr;
     delete event;
+    event = nullptr;
+    
 }
 
 

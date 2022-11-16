@@ -9,5 +9,6 @@ protected:
 	player* p;
 public:
 	virtual void execute(logoutinfo* info) override = 0;
+	virtual ~event_Map() override {}
 };
 

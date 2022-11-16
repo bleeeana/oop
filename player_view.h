@@ -12,10 +12,9 @@ public:
 	player_view(player * p, Texture& t);
 	~player_view()
 	{
-		p = nullptr;
-		delete p;
 	}
 	void update(float time, int x);
+	player* get_player();	
 	Sprite& get_s();
 	void draw(RenderWindow& win);
 };

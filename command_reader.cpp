@@ -4,15 +4,27 @@
 
 
 
-void command_reader::set_settings()
+int command_reader::set_difficult()
+{
+    std::cout << "Настроить сложность:\n1)легенько\n2)норм\n3)сложно\n";
+    int n;
+    std::cin >> n;
+    return n;
+}
+
+void command_reader::set_settings(configuration* cfg)
 {
     int n;
-    std::cout << "Настроить игру через файл или через консоль?(1 или 2)\n";
+    std::cout << "Настроить управление через файл или через консоль?(1 или 2)\n";
     std::cin >> n;
-    if (n == 1) this->cfg = new input_config();
-    else this->cfg = new input_config_console();
-    this->cfg->input();
-    mng = new gui_management();
+    if (n == 1) {
+        input_config input(cfg);
+        input.set();
+    }
+    else {
+        input_config_console input(cfg);
+        input.set();
+    }
 }
 
 void command_reader::input_size_win()
@@ -25,44 +37,22 @@ void command_reader::input_size_win()
     else if (n == 2) height = width = 16;
     else if (n == 3) height = width = 21;
     else { height = width = -100; }
-    /*sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
-
-    return 0;
-    */
 }
 
 
 int command_reader::input_event()
 {
-     return this->mng->input_commands(*cfg, event);
+     return this->config->input_commands(event);
 }
 
-/*void command_reader::set_management()
+
+
+void command_reader::set_management()
 {
-    int n;
-    std::cout << "Выберите вариант управления персонажем(1 - через SFML, 2 - через консоль)\n";
-    std::cin >> n;
-    if (n == 1) mng = new gui_management();
-    
-
+       this->config =  new sfml_configuration();
+       set_settings(config);
 }
-*/
 
 sf::Event& command_reader::get_event()
 {

@@ -9,6 +9,11 @@ private:
 	static key* instance;
 	key();
 public:
+	~key()
+	{
+		std::cout << "deleted singleton";
+	}
+	void delete_key();
 	key(const key&) = delete;
 	void operator=(const key&) = delete;
 	std::map<std::string, sf::Keyboard::Key>* get_keys();

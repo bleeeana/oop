@@ -4,11 +4,13 @@
 #include "configuration.h"
 class sfml_configuration : public configuration
 {
-public:
-	enum setting {UP, DOWN, LEFT, RIGHT,RUN};
-	sfml_configuration();
-	~sfml_configuration(){}
+private:
 	std::map<setting, sf::Keyboard::Key> config;
-	virtual void input() override = 0;
+public:
+	sfml_configuration();
+	~sfml_configuration() {};
+	void input(setting type, std::string b) override;
+	int input_commands(sf::Event& event) override;
+	void check() override;
 };
 

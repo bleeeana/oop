@@ -12,6 +12,15 @@ private:
     logoutinfo* info;
     std::pair <int, int> player_location;
 public:
+    ~Map()
+    {
+        for (int i = 0; i < this->numx; i++) {
+            for (int j = 0; j < this->numx; j++) {
+                cells[i][j].delete_event();
+            }
+        }
+        clear();
+    }
     Map(int x, int y, logoutinfo* info = nullptr);
     Map operator=(Map& m);
     int get_numx() const;

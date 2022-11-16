@@ -11,7 +11,7 @@ public:
 	cell(int type, events* event);
 	cell(cell* other);
 	cell operator=(cell& c);
-	~cell(){}
+	//~cell() { if (event != nullptr) { std::cout << event; delete event; event = nullptr; } }
 	void set_type(int type);
 	int get_type();
 	void get_event(logoutinfo* info);

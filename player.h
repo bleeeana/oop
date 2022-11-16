@@ -11,6 +11,10 @@ private:
 	int counter;
 	logoutinfo* info;
 public:
+	~player()
+	{
+		delete info;
+	}
 	player(logoutinfo* info = nullptr);
 	void set_speed(long double x, long double y);
 	void set_hp(float hp);

@@ -5,6 +5,11 @@ key::key() {
 }
 
 
+void key::delete_key()
+{
+	delete instance;
+}
+
 std::map<std::string, sf::Keyboard::Key>* key::get_keys()
 {
 	return &set_key;
@@ -52,6 +57,8 @@ void key::select_data()
 		{"down",sf::Keyboard::Down},
 		{"left",sf::Keyboard::Left},
 		{"right",sf::Keyboard::Right},
+		{"alt", sf::Keyboard::LAlt},
+		{"esc", sf::Keyboard::Escape}
 		}
 	);
 }
