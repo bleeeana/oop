@@ -1,0 +1,27 @@
+[STATUS] Game started
+[GAME] chest creating event
+[GAME] player changed location
+[GAME] player changed location
+[GAME] player changed location
+[GAME] player changed location
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[ERROR] player is trying to get into unavailable cell
+[GAME] player changed location
+[GAME] player changed location
+[GAME] player changed location
+[GAME] player changed location
+[GAME] player changed location
